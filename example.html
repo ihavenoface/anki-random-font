@@ -2,7 +2,6 @@
 
 <div>
     <label for=font-selector>
-        Font:
         <select id=font-selector></select>
     </label>
 </div>
@@ -19,6 +18,7 @@
             "HanaMinA",
             "MogihaPenFont",
         ];
+        const RANDOM_FONT = 'Random Font';
         const fontSelect = (e) => {
             document.body.dataset.selectedFont = e.target.value;
             updateFonts();
@@ -34,16 +34,16 @@
             const selector = document.querySelector('#font-selector');
             if (!selector) return;
             selector.innerHTML = '';
-            appendOption(selector, 'random');
+            appendOption(selector, RANDOM_FONT);
             fonts.forEach((textContent) => {
                 appendOption(selector, textContent)
             });
             selector.onchange = fontSelect;
-            selector.value = document.body.dataset.selectedFont || 'random';
+            selector.value = document.body.dataset.selectedFont || RANDOM_FONT;
         }
         const updateFonts = () => {
             let font = document.body.dataset.selectedFont;
-            if (!font || font === 'random') {
+            if (!font || font === RANDOM_FONT) {
                 font = fonts[Math.floor(Math.random() * fonts.length)]
             }
 
