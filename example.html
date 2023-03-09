@@ -1,0 +1,56 @@
+<span class=random-font>{{Katakana}}</span>
+
+<div>
+    <label for=font-selector>
+        Font:
+        <select id=font-selector></select>
+    </label>
+</div>
+
+<style id=change-font></style>
+
+<script>
+    (() => {
+        const fonts = [
+            "acgyosyo",
+            "ackaisyo",
+            "Noto Serif JP",
+            "Yu Mincho",
+            "HanaMinA",
+            "MogihaPenFont",
+        ];
+        const fontSelect = (e) => {
+            document.body.dataset.selectedFont = e.target.value;
+            updateFonts();
+        }
+        const appendOption = (selector, textContent, value=textContent) => {
+            const el = Object.assign(document.createElement('option'), {
+                textContent,
+                value,
+            });
+            selector.appendChild(el);
+        }
+        const updateSelector = () => {
+            const selector = document.querySelector('#font-selector');
+            if (!selector) return;
+            selector.innerHTML = '';
+            appendOption(selector, 'random');
+            fonts.forEach((textContent) => {
+                appendOption(selector, textContent)
+            });
+            selector.onchange = fontSelect;
+            selector.value = document.body.dataset.selectedFont || 'random';
+        }
+        const updateFonts = () => {
+            let font = document.body.dataset.selectedFont;
+            if (!font || font === 'random') {
+                font = fonts[Math.floor(Math.random() * fonts.length)]
+            }
+
+            const el = document.getElementById("change-font");
+            el.textContent = `.random-font { font-family: "${font}" !important; }`;
+        }
+        updateSelector();
+        updateFonts();
+    })()
+</script>
